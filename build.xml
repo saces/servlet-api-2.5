@@ -34,7 +34,7 @@
 			</manifest>
 			<fileset dir="${build}/"/>
 			<fileset dir="src/" casesensitive="no">
-				<include name="*.properties"/>
+				<include name="**/*.properties"/>
 			</fileset>
 		</jar>
 	</target>
