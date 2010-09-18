@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!-- ant build file for servlet-api-2.5 -->
+
+<project name="servlet-api-2.5" default="dist" basedir=".">
+
+	<property name="source-version" value="1.5"/>
+	<property name="target-version" value="1.5"/>
+	<property name="build" location="build/"/>
+	<property name="dist" location="dist/"/>
+	<property name="src" location="src/"/>
+
+	<target name="mkdir">
+		<mkdir dir="${build}"/>
+		<mkdir dir="${dist}"/>
+	</target>
+
+	<!-- ================================================== -->
+	<target name="compile" depends="mkdir" >
+		<javac srcdir="${src}" destdir="${build}" debug="on" optimize="on" source="${source-version}" target="${target-version}">
+			<include name="**/*.java"/>
+		</javac>
+	</target>
+
+	<!-- ================================================== -->
+
+	<target name="dist" depends="compile"
+		description="generate the distribution" >
+		<jar jarfile="${dist}/servlet-api-2.5.jar" duplicate="fail">
+			<manifest>
+				<attribute name="Bundle-Name" value="ServletAPI 2.5" />
+				<attribute name="Bundle-SymbolicName" value="javax.servlet" />
+				<attribute name="Bundle-Version" value="0.0.1" />
+				<attribute name="Export-Package" value="javax.servlet, javax.servlet.http"/>
+			</manifest>
+			<fileset dir="${build}/"/>
+			<fileset dir="src/" casesensitive="no">
+				<include name="*.properties"/>
+			</fileset>
+		</jar>
+	</target>
+
+	<!-- ================================================== -->
+	<target name="clean" description="Delete class files and docs dir.">
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+</project>
